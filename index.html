@@ -1,0 +1,205 @@
+diff --git a/index.html b/index.html
+index 4cbf97b69a7ed76ee44c66dc518e32e7a4a03d55..5e2fbc9bdd78665fce4df3a8957448452fe1b721 100644
+--- a/index.html
++++ b/index.html
+@@ -1,163 +1,167 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+-  <title>Bulletin</title>
++  <title>Brain Bulletin</title>
+   <link rel="manifest" href="manifest.json" />
+-  <meta name="theme-color" content="#142033" />
++  <meta name="theme-color" content="#24020e" />
+   <meta name="apple-mobile-web-app-capable" content="yes" />
+   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+-  <meta name="apple-mobile-web-app-title" content="Bulletin" />
++  <meta name="apple-mobile-web-app-title" content="Brain Bulletin" />
+   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+   <link rel="stylesheet" href="styles.css" />
+ </head>
+ <body>
++  <div class="bg-orb orb-a"></div>
++  <div class="bg-orb orb-b"></div>
++
+   <header class="topbar">
+     <div class="topbar-inner">
+       <div class="brand">
+-        <h1>Bulletin</h1>
+-        <p>Your fast external brain for the mental pileup.</p>
++        <p class="eyebrow">Mind Declutter System</p>
++        <h1>Brain Bulletin</h1>
++        <p>Prioritize what matters so nothing important keeps spinning in your head.</p>
+       </div>
+       <nav class="tabbar" aria-label="Primary views">
+         <button class="tab active" data-view="bulletin">Bulletin</button>
+         <button class="tab" data-view="all">All Items</button>
+         <button class="tab" data-view="schedule">Schedule</button>
+       </nav>
+     </div>
+   </header>
+ 
+   <main class="app">
+     <section class="hero-card">
+-      <div class="hero-top">
+-        <div class="hero-copy">
+-          <h2>Unload it. Rank it. Surface what matters.</h2>
+-          <p>Capture thoughts fast, assign priority, optionally schedule them, and let the bulletin sort the chaos into something sane.</p>
+-        </div>
++      <div class="hero-copy">
++        <h2>Sleek, calm, and brutally clear.</h2>
++        <p>Capture quickly, score urgency instantly, and switch into Focus Mode when you only want the truly important tasks on screen.</p>
+       </div>
+       <div class="hero-stats" id="heroStats"></div>
++      <div class="hero-actions">
++        <button class="btn secondary" id="focusModeBtn" type="button">Enable Focus Mode</button>
++        <button class="btn ghost" id="clearCompletedBtn" type="button">Clear Completed</button>
++      </div>
+     </section>
+ 
+     <section class="capture-card" id="quickCaptureSection">
+       <div class="capture-title">
+         <h3>Quick Capture</h3>
+-        <button class="btn ghost" id="clearFormBtn" type="button">Clear</button>
++        <button class="btn ghost" id="clearFormBtn" type="button">Reset</button>
+       </div>
+       <form id="captureForm" class="field-grid">
+         <label>
+           Title
+-          <input id="titleInput" type="text" maxlength="140" placeholder="Dump the thought here..." required />
++          <input id="titleInput" type="text" maxlength="140" placeholder="What's on your mind right now?" required />
+         </label>
+ 
+         <label>
+           Notes <span class="tiny">optional</span>
+-          <textarea id="notesInput" maxlength="1200" placeholder="Add context, details, or leave this blank."></textarea>
++          <textarea id="notesInput" maxlength="1200" placeholder="Context, links, constraints, or details."></textarea>
+         </label>
+ 
+-        <div class="field-grid">
+-          <label>
+-            Priority
+-            <div class="chip-row" id="priorityChips" role="radiogroup" aria-label="Priority">
+-              <button class="chip active" type="button" data-value="critical">Critical</button>
+-              <button class="chip" type="button" data-value="important">Important</button>
+-              <button class="chip" type="button" data-value="normal">Normal</button>
+-              <button class="chip" type="button" data-value="backBurner">Back Burner</button>
+-            </div>
+-          </label>
+-        </div>
++        <label>
++          Priority
++          <div class="chip-row" id="priorityChips" role="radiogroup" aria-label="Priority">
++            <button class="chip active" type="button" data-value="critical">Critical</button>
++            <button class="chip" type="button" data-value="important">Important</button>
++            <button class="chip" type="button" data-value="normal">Normal</button>
++            <button class="chip" type="button" data-value="backBurner">Back Burner</button>
++          </div>
++        </label>
+ 
+         <div class="field-row">
+           <label>
+             Due date <span class="tiny">optional</span>
+             <input id="dateInput" type="date" />
+           </label>
+           <label>
+             Due time <span class="tiny">optional</span>
+             <input id="timeInput" type="time" />
+           </label>
+         </div>
+ 
+         <div class="toggle-row">
+           <div>
+-            <div style="font-weight: 700;">Reminder</div>
+-            <div class="tiny">Stored for future notification support in the web version.</div>
++            <div class="toggle-title">Reminder</div>
++            <div class="tiny">Stored for notification-ready reminders.</div>
+           </div>
+           <label class="toggle" aria-label="Reminder enabled">
+             <input id="reminderInput" type="checkbox" />
+             <span class="slider"></span>
+           </label>
+         </div>
+ 
+         <div class="actions">
+-          <button class="btn primary" type="submit" id="saveBtn">Add Thought</button>
+-          <button class="btn secondary" type="button" id="scrollBulletinBtn">See Bulletin</button>
++          <button class="btn primary" type="submit" id="saveBtn">Add Task</button>
++          <button class="btn secondary" type="button" id="scrollBulletinBtn">View Bulletin</button>
+         </div>
+       </form>
+     </section>
+ 
+     <section id="bulletinView" class="view active" aria-label="Bulletin view"></section>
+     <section id="allView" class="view panel" aria-label="All items view"></section>
+     <section id="scheduleView" class="view panel" aria-label="Schedule view"></section>
+   </main>
+ 
+   <button class="floating-add" id="floatingAdd" aria-label="Jump to quick capture">+</button>
+ 
+   <div class="modal" id="editModal" aria-hidden="true">
+     <div class="modal-card">
+       <div class="modal-header">
+         <div>
+-          <h3 style="margin:0;">Edit Item</h3>
+-          <div class="tiny">Update the thought without summoning unnecessary complexity.</div>
++          <h3>Edit Task</h3>
++          <div class="tiny">Adjust details without losing momentum.</div>
+         </div>
+         <button class="btn ghost" type="button" id="closeModalBtn">Close</button>
+       </div>
+       <form id="editForm" class="field-grid">
+         <input type="hidden" id="editId" />
+         <label>
+           Title
+           <input id="editTitle" type="text" maxlength="140" required />
+         </label>
+         <label>
+           Notes
+           <textarea id="editNotes" maxlength="1200"></textarea>
+         </label>
+         <label>
+           Priority
+           <select id="editPriority">
+             <option value="critical">Critical</option>
+             <option value="important">Important</option>
+             <option value="normal">Normal</option>
+             <option value="backBurner">Back Burner</option>
+           </select>
+         </label>
+         <div class="field-row">
+           <label>
+             Due date
+             <input id="editDate" type="date" />
+           </label>
+           <label>
+             Due time
+             <input id="editTime" type="time" />
+           </label>
+         </div>
+         <div class="toggle-row">
+           <div>
+-            <div style="font-weight: 700;">Reminder</div>
+-            <div class="tiny">Stored locally.</div>
++            <div class="toggle-title">Reminder</div>
++            <div class="tiny">Keep this on your radar.</div>
+           </div>
+           <label class="toggle" aria-label="Edit reminder enabled">
+             <input id="editReminder" type="checkbox" />
+             <span class="slider"></span>
+           </label>
+         </div>
+         <div class="actions">
+           <button class="btn primary" type="submit">Save Changes</button>
+-          <button class="btn danger" type="button" id="deleteFromModalBtn">Delete Item</button>
++          <button class="btn danger" type="button" id="deleteFromModalBtn">Delete Task</button>
+         </div>
+       </form>
+     </div>
+   </div>
+ 
+   <script src="app.js"></script>
+ </body>
+ </html>
